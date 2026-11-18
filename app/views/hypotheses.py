@@ -28,8 +28,9 @@ for col, v in zip(cols, ["SUPPORTED", "REJECTED", "INCONCLUSIVE", "NOT TESTABLE"
 
 tbl = pd.DataFrame([{"ID": h["id"], "Hypothesis": h["title"], "Verdict": h["verdict"],
                      "p-value": h["p_value"], "Effect": h["effect"]} for h in H])
-tbl[["p-value", "Effect"]] = tbl[["p-value", "Effect"]].apply(pd.to_numeric, errors="coerce")
-st.dataframe(tbl.style.format({"p-value": "{:.4f}", "Effect": "{:+.3f}"}, na_rep="-")
+tbl["p-value"] = tbl["p-value"].map(lambda v: "-" if v is None or pd.isna(v) else f"{v:.4f}")
+tbl["Effect"] = tbl["Effect"].map(lambda v: "-" if v is None or pd.isna(v) else f"{v:+.3f}")
+st.dataframe(tbl.style
              .map(lambda v: f"background-color:{C.VERDICT_STYLE.get(v, ('', '#fff'))[1]}", subset=["Verdict"]),
              hide_index=True, width="stretch")
 C.csv_button(tbl, f"{name}_hypotheses.csv")

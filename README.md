@@ -8,6 +8,10 @@ research UI for presentations.
 > Minor project: SatyaCheck / HinCheck (text module). The full specification is in
 > [`BUILD_INSTRUCTIONS.md`](BUILD_INSTRUCTIONS.md); the concepts are in [`docs/CONCEPTS.md`](docs/CONCEPTS.md)
 > and the hypotheses in [`docs/HYPOTHESES.md`](docs/HYPOTHESES.md).
+>
+> **Team guide (PDF):** [`docs/SatyaCheck_Text_Team_Guide.pdf`](docs/SatyaCheck_Text_Team_Guide.pdf) explains how
+> everything works, with all results, charts and a tour of the UI. It is regenerated from the result files with
+> `python scripts/make_guide.py` followed by `node scripts/print_pdf.js` (Playwright).
 
 **Rule followed everywhere:** no number is typed by hand. Every table, chart, report sentence and UI value is read
 from result files that the code produced.
