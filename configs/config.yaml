@@ -1,0 +1,84 @@
+# SatyaCheck-Text: every setting lives here.
+# Any value can be overridden from the terminal with:  --set section.key=value
+# Labels are fixed everywhere: 1 = fake, 0 = real.
+
+seed: 42
+
+project:                      # shown on the UI Home page - edit these
+  title: "SatyaCheck-Text: Fake vs. Real News Detection"
+  subtitle: "Bag-of-Words, TF-IDF and BERT-family models for English, Hinglish and Hindi"
+  team: "Your team names"
+  guide: "Your guide's name"
+  institution: "Your institution"
+
+paths:
+  data_dir: data
+  outputs_dir: outputs
+
+synthetic:
+  n_rows: 3000
+  style_correlation: 0.7      # P(sensational | fake) = s, P(sensational | real) = 1 - s. 0.5 removes the style clue.
+  label_noise: 0.03           # share of labels flipped at random
+  language_mix: {en: 0.60, hinglish: 0.25, hi: 0.15}
+  n_sources: 20
+  fake_heavy_sources: 4       # channel_01..channel_04 post mostly fake items (source shortcut for the audit)
+  start_date: "2025-01-01"
+  end_date: "2026-10-31"
+
+split:
+  strategy: random            # random | time | group
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+classical:
+  models: [bow_nb, bow_lr, tfidf_lr, tfidf_svm, tfidfchar_lr]
+  ngram_range: [1, 2]
+  char_ngram_range: [3, 5]
+  min_df: 2
+  max_df: 0.95
+  max_features: 50000
+  C_grid: [0.25, 1.0, 4.0]
+  alpha_grid: [0.1, 0.5, 1.0]
+  top_k: 25
+
+transformers:
+  default_models: [distilbert, albert, mbert, muril]
+  mode: finetune              # finetune | embed
+  max_length: 128
+  truncation: head            # head | head_tail
+  batch_size: 16
+  learning_rate: 2.0e-5
+  learning_rate_small: 3.0e-5 # used for distilbert and albert
+  epochs: 3
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  grad_clip: 1.0
+  patience: 1                 # early stopping on validation macro-F1
+  class_weight_threshold: 0.6 # class weighting turns on if one class > 60 %
+  seeds: 1                    # use 3 for final paper numbers
+  train_subset: null          # e.g. 2000 to test big data quickly
+  device: auto                # auto | cuda | mps | cpu
+  embed_batch_size: 32
+
+evaluation:
+  threshold: 0.5
+  bootstrap: 1000
+  ci: 0.95
+  ece_bins: 10
+  alpha: 0.05
+  length_bins: [15, 40]       # short < 15 words <= medium < 40 words <= long
+  n_errors: 15                # most confident mistakes kept per model
+  n_disagreements: 200
+
+audit:
+  first_n_words: 5
+
+hypotheses:
+  alpha: 0.05
+  shortcut_threshold: 0.5     # H5: a probe "explains" the model if its Shortcut Index is above this
+  bootstrap: 1000
+
+style_sweep:
+  values: [0.5, 0.6, 0.7, 0.8, 0.9]
+  n_rows: 2000

@@ -1,0 +1,32 @@
+# data and outputs are never committed
+data/raw/*
+!data/raw/.gitkeep
+data/processed/
+data/synthetic/*
+!data/synthetic/.gitkeep
+data/external/
+outputs/
+
+# environments
+.venv/
+venv/
+env/
+.conda/
+.env
+*.env
+
+# model weights
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.joblib
+*.onnx
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.ipynb_checkpoints/
+.DS_Store
