@@ -7,7 +7,7 @@ import common as C
 name = C.require_dataset()
 st.title("Live checker")
 st.warning("A model only judges the **wording** of a text. It does not check facts. Always verify with a fact-checker.",
-           icon="⚠️")
+           icon=":material/warning:")
 res = C.results(name)
 if not res:
     st.info("No trained models.")

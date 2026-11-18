@@ -24,7 +24,7 @@ show = lb[["rank", "model", "family", "mode", "macro_f1", "ci_low", "ci_high", "
            "recall_fake", "roc_auc", "pr_auc", "brier", "ece", "val_macro_f1", "train_seconds", "ms_per_item", "params"]]
 hi_better = ["macro_f1", "accuracy", "precision_fake", "recall_fake", "roc_auc", "pr_auc", "val_macro_f1"]
 lo_better = ["brier", "ece", "train_seconds", "ms_per_item"]
-sty = (show.style.highlight_max(subset=hi_better, color="#c7e9c0").highlight_min(subset=lo_better, color="#c7e9c0")
+sty = (show.style.highlight_max(subset=hi_better, props="color:#4ade80;font-weight:700").highlight_min(subset=lo_better, props="color:#4ade80;font-weight:700")
        .format({c: "{:.3f}" for c in hi_better + ["ci_low", "ci_high", "brier", "ece"]} |
                {"train_seconds": "{:.1f}", "ms_per_item": "{:.2f}", "params": "{:,.0f}"}, na_rep="-"))
 st.dataframe(sty, hide_index=True, width="stretch")

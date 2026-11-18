@@ -57,7 +57,7 @@ if r.get("tuning"):
     t = pd.DataFrame(r["tuning"])
     st.markdown(f"Hyper-parameter **{key}** was chosen on the **validation split** (never the test split) by macro-F1:")
     best = r.get("best_value", r.get("best_C"))
-    st.dataframe(t.style.apply(lambda row: ["background-color:#c7e9c0" if row[key] == best else "" for _ in row], axis=1)
+    st.dataframe(t.style.apply(lambda row: ["color:#4ade80;font-weight:700" if row[key] == best else "" for _ in row], axis=1)
                  .format({"val_macro_f1": "{:.4f}"}), hide_index=True)
 if r.get("curve"):
     cv = pd.DataFrame(r["curve"])

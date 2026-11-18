@@ -47,7 +47,7 @@ def sidebar() -> str | None:
         else:
             st.session_state["dataset"] = None
             st.warning("No results yet. In a terminal run:\n\n`python -m fakenews run-all`")
-        st.caption(f"⚠️ {DISCLAIMER}")
+        st.caption(DISCLAIMER)
     return st.session_state.get("dataset")
 
 
@@ -129,7 +129,7 @@ def csv_button(df: pd.DataFrame, fname: str, label="⬇ CSV", key=None):
 def synthetic_banner(name):
     if "WARNING" in card(name):
         st.warning("**Synthetic dataset selected.** These numbers show that the pipeline works; they are NOT model "
-                   "performance. Real claims come from your own dataset and LIAR.", icon="🧪")
+                   "performance. Real claims come from your own dataset and LIAR.", icon=":material/science:")
 
 
 @st.cache_resource
@@ -142,14 +142,14 @@ def get_predictor(name, model):
     return predictor(name, model, _stamp(name))
 
 
-VERDICT_STYLE = {"SUPPORTED": ("✅", "#e6f4ea", "#1e7e34"), "REJECTED": ("❌", "#fdecea", "#b02a37"),
-                 "INCONCLUSIVE": ("➖", "#fff8e1", "#8a6d00"), "NOT TESTABLE": ("⏸", "#eeeeee", "#555555")}
+VERDICT_STYLE = {"SUPPORTED": ("", "#0f2a17", "#4ade80"), "REJECTED": ("", "#2a0f0f", "#f87171"),
+                 "INCONCLUSIVE": ("", "#26210c", "#facc15"), "NOT TESTABLE": ("", "#1a1a1a", "#a3a3a3")}
 
 
 def verdict_badge(v: str) -> str:
     icon, bg, fg = VERDICT_STYLE.get(v, ("", "#eee", "#333"))
-    return (f'<span style="background:{bg};color:{fg};padding:2px 8px;border-radius:10px;font-weight:600;'
-            f'font-size:0.85em">{icon} {v}</span>')
+    return (f'<span style="background:{bg};color:{fg};border:1px solid {fg}55;padding:1px 8px;border-radius:3px;'
+            f'font-weight:600;font-size:0.75em;letter-spacing:0.04em">{v}</span>')
 
 
 def fmt(v, nd=3):

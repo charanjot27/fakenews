@@ -176,7 +176,7 @@ def cmd_app(a):
         cmd += ["--server.headless", "true"]
     log("Starting: " + " ".join(cmd))
     try:
-        subprocess.run(cmd, check=False)
+        subprocess.run(cmd, check=False, cwd=PROJECT_ROOT)
     except KeyboardInterrupt:
         pass
 

@@ -31,7 +31,7 @@ tbl = pd.DataFrame([{"ID": h["id"], "Hypothesis": h["title"], "Verdict": h["verd
 tbl["p-value"] = tbl["p-value"].map(lambda v: "-" if v is None or pd.isna(v) else f"{v:.4f}")
 tbl["Effect"] = tbl["Effect"].map(lambda v: "-" if v is None or pd.isna(v) else f"{v:+.3f}")
 st.dataframe(tbl.style
-             .map(lambda v: f"background-color:{C.VERDICT_STYLE.get(v, ('', '#fff'))[1]}", subset=["Verdict"]),
+             .map(lambda v: f"color:{C.VERDICT_STYLE.get(v, ('', '', '#aaa'))[2]}", subset=["Verdict"]),
              hide_index=True, width="stretch")
 C.csv_button(tbl, f"{name}_hypotheses.csv")
 
